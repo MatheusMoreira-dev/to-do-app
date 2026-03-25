@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>ToDo App</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div class="to-do-box">
+        <h1 id="to-do-title"></h1>
+
+        <button id="add-task">
+          <span class="icon">+</span>
+          <span class="name">Adicionar Tarefa</span>
+        </button>
+
+        <section class="tasks-section to-do-tasks">
+          <header>
+            <h2>Pendentes</h2>
+            <span></span>
+          </header>
+
+          <ul id="to-do-tasks" class="list-tasks"></ul>
+        </section>
+
+        <section class="tasks-section completed-tasks">
+          <header>
+            <h2>Concluídas</h2>
+            <span></span>
+          </header>
+
+          <ul id="completed-tasks" class="list-tasks"></ul>
+        </section>
+      </div>
+    </main>
+    <aside>
+      <button id="add-to-do"></button>
+
+      <div>
+        <input type="text" />
+        <span class="trash-icon"></span>
+      </div>
+
+      <ul>
+        <li></li>
+      </ul>
+    </aside>
+    <footer></footer>
+    <script src="app.js"></script>
+  </body>
+</html>
