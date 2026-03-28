@@ -6,6 +6,9 @@ const completedTasks = document.getElementById("completed-tasks");
 const btnAddTask = document.getElementById("add-task");
 
 title.textContent = StorageManager.getTitle();
+title.addEventListener("blur", (e) =>
+  StorageManager.setTitle(e.target.textContent),
+);
 
 // Função auxiliar para mudar o Status de uma Task
 function changeTaskStatus(e) {
