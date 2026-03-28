@@ -22,9 +22,11 @@ function changeTaskStatus(e) {
 
 // Renderização da Task
 function renderTask({ id, isCompleted, name }) {
+  // Container
   const li = document.createElement("li");
   li.classList.add("list-tasks");
 
+  // Checkbox
   const checkBox = document.createElement("input");
   checkBox.id = id;
   checkBox.type = "checkbox";
@@ -32,13 +34,24 @@ function renderTask({ id, isCompleted, name }) {
 
   checkBox.addEventListener("change", (e) => changeTaskStatus(e));
 
+  // Nome
   const nameInput = document.createElement("input");
   nameInput.value = name;
+
   nameInput.addEventListener("blur", (e) =>
     StorageManager.editTask(id, { name: e.target.value }),
   );
 
-  li.append(checkBox, nameInput);
+  // Deletar
+  const deleteButton = document.createElement("button");
+  deleteButton.textContent = "Delete";
+  deleteButton.addEventListener("click", () => {
+    StorageManager.deleteTask(id);
+    li.remove();
+  });
+
+  // Adiciona ao container
+  li.append(checkBox, nameInput, deleteButton);
 
   return li;
 }
