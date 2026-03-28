@@ -3,9 +3,11 @@ const toDoTasks = document.getElementById("to-do-tasks");
 const completedTasks = document.getElementById("completed-tasks");
 const btnAddTask = document.getElementById("add-task");
 
-const storageToDoList = localStorage.getItem("saves-to-do");
+const storageToDoList = localStorage.getItem("saved-to-do");
 
 title.textContent = "To Do App";
+
+function openToDoList() {}
 
 function moveTaskByStatus(node, isCompleted) {
   node.remove();
