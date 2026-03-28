@@ -1,13 +1,11 @@
+import { StorageManager } from "./storage.js";
+
 const title = document.getElementById("to-do-title");
 const toDoTasks = document.getElementById("to-do-tasks");
 const completedTasks = document.getElementById("completed-tasks");
 const btnAddTask = document.getElementById("add-task");
 
-const storageToDoList = localStorage.getItem("saved-to-do");
-
 title.textContent = "To Do App";
-
-function openToDoList() {}
 
 function moveTaskByStatus(node, isCompleted) {
   node.remove();
@@ -20,10 +18,13 @@ function moveTaskByStatus(node, isCompleted) {
 }
 
 function newTask({ isCompleted, name }) {
+  StorageManager.createToDo({ isCompleted, name });
   toDoTasks.prepend(renderTask({ isCompleted, name }));
 }
 
-btnAddTask.addEventListener("click", (e) => newTask({ name: "new Task" }));
+btnAddTask.addEventListener("click", (e) =>
+  newTask({ name: "new Task", isCompleted: false }),
+);
 
 function renderTask({ isCompleted, name }) {
   const li = document.createElement("li");
@@ -44,11 +45,3 @@ function renderTask({ isCompleted, name }) {
 
   return li;
 }
-
-toDoTasks.append(
-  renderTask({ name: "Olá" }),
-  renderTask({ name: "Olá" }),
-  renderTask({ name: "Olá" }),
-  renderTask({ name: "Olá" }),
-  renderTask({ name: "Olá" }),
-);
