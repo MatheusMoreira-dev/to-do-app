@@ -5,8 +5,9 @@ const toDoTasks = document.getElementById("to-do-tasks");
 const completedTasks = document.getElementById("completed-tasks");
 const btnAddTask = document.getElementById("add-task");
 
-title.textContent = "To Do App";
+title.textContent = StorageManager.getTitle();
 
+// Função auxiliar para mudar o Status de uma Task
 function changeTaskStatus(e) {
   const id = e.target.id;
   const status = e.target.checked;
@@ -19,6 +20,7 @@ function changeTaskStatus(e) {
   section.appendChild(node);
 }
 
+// Renderização da Task
 function renderTask({ id, isCompleted, name }) {
   const li = document.createElement("li");
   li.classList.add("list-tasks");
@@ -32,13 +34,17 @@ function renderTask({ id, isCompleted, name }) {
 
   const nameInput = document.createElement("input");
   nameInput.value = name;
+  nameInput.addEventListener("blur", (e) =>
+    StorageManager.editTask(id, { name: e.target.value }),
+  );
 
   li.append(checkBox, nameInput);
 
   return li;
 }
 
-function loadTasks() {
+// Função para carregar as Tasks Salvas
+function loadSavedTasks() {
   for (let task of StorageManager.filterByStatus(false)) {
     toDoTasks.prepend(renderTask(task));
   }
@@ -48,8 +54,9 @@ function loadTasks() {
   }
 }
 
-loadTasks();
+loadSavedTasks();
 
+// Função para a criação de novas Tasks
 function newTask({ name }) {
   const task = StorageManager.createTask({ name });
   toDoTasks.prepend(renderTask(task));
