@@ -8,72 +8,73 @@ export class StorageManager {
     return title ? title : "To Do Title";
   }
 
-  static getTasks(isCompleted = false) {
-    const key = isCompleted ? "completed" : "to-do";
-    const items = localStorage.getItem(key);
-
+  static getTasks() {
+    const items = localStorage.getItem("tasks");
     return items ? JSON.parse(items) : [];
   }
 
-  static updateTasks(isCompleted, newList) {
-    const key = isCompleted ? "completed" : "to-do";
+  static filterByStatus(isCompleted) {
+    return this.getTasks().filter((v) => v.isCompleted == isCompleted);
+  }
 
-    localStorage.setItem(key, JSON.stringify(newList));
+  static updateStorageTasks(newList) {
+    localStorage.setItem("tasks", JSON.stringify(newList));
     return newList;
   }
 
   static createTask({ name }) {
     const tasks = this.getTasks();
+    const newTask = { id: crypto.randomUUID(), name, isCompleted: false };
 
-    tasks.push({ id: crypto.randomUUID(), name });
-    this.updateTasks(false, tasks);
+    tasks.push(newTask);
+    this.updateStorageTasks(tasks);
+
+    return newTask;
   }
 
-  static getTaskIndex(id, isCompleted) {
-    return this.getTasks(isCompleted).findIndex((v) => v.id == id);
+  static getTaskIndex(id) {
+    return this.getTasks().findIndex((v) => v.id == id);
   }
 
-  static getTaskById(id, isCompleted) {
-    return this.getTasks(isCompleted).find((v) => v.id == id);
+  static getTaskById(id) {
+    return this.getTasks().find((v) => v.id == id);
   }
 
-  static moveTask(id, newStatus) {
-    const index = this.getTaskIndex(id, !newStatus);
+  static changeTaskStatus(id, status) {
+    const index = this.getTaskIndex(id);
 
     if (index != -1) {
-      const previousList = this.getTasks(!newStatus);
+      const taskList = this.getTasks();
+      const task = taskList[index];
 
-      const newList = this.getTasks(newStatus);
-      newList.push(previousList.splice(index, 1));
+      taskList[index]["isCompleted"] = status;
+      this.updateStorageTasks(taskList);
 
-      this.updateTasks(!newStatus, previousList);
-      this.updateTasks(newStatus, newList);
+      return task;
     }
   }
 
-  // Atualiza os campos de um to-do
-  static patchToDo(id, payload) {
+  static editTask(id, payload) {
     const items = this.getTasks();
-    const foundIndex = items.findIndex((v) => v.id == id);
+    const foundIndex = this.getTaskIndex(id);
 
     if (foundIndex != -1) {
       for (let key in payload) items[foundIndex][key] = payload[key];
-      this.commitChanges(items);
+      this.updateStorageTasks(items);
     }
 
     return items[foundIndex];
   }
 
-  // Deleta o To Do
-  static deleteToDo(id) {
+  static deleteTask(id) {
     const items = this.getTasks();
-    const foundIndex = items.findIndex((v) => v.id == id);
+    const foundIndex = this.getTaskIndex(id);
 
     if (foundIndex != -1) {
       const item = items[foundIndex];
 
       items.splice(foundIndex, 1);
-      this.commitChanges(items);
+      this.updateStorageTasks(items);
 
       return item;
     }

@@ -7,36 +7,28 @@ const btnAddTask = document.getElementById("add-task");
 
 title.textContent = "To Do App";
 
-function moveTaskByStatus(node, isCompleted) {
+function changeTaskStatus(e) {
+  const id = e.target.id;
+  const status = e.target.checked;
+  const node = e.target.parentElement;
+
+  StorageManager.changeTaskStatus(id, status);
   node.remove();
 
-  if (isCompleted) {
-    completedTasks.appendChild(node);
-  } else {
-    toDoTasks.appendChild(node);
-  }
+  const section = status ? completedTasks : toDoTasks;
+  section.appendChild(node);
 }
 
-function newTask({ isCompleted, name }) {
-  StorageManager.createToDo({ isCompleted, name });
-  toDoTasks.prepend(renderTask({ isCompleted, name }));
-}
-
-btnAddTask.addEventListener("click", (e) =>
-  newTask({ name: "new Task", isCompleted: false }),
-);
-
-function renderTask({ isCompleted, name }) {
+function renderTask({ id, isCompleted, name }) {
   const li = document.createElement("li");
   li.classList.add("list-tasks");
 
   const checkBox = document.createElement("input");
+  checkBox.id = id;
   checkBox.type = "checkbox";
   checkBox.checked = isCompleted;
 
-  checkBox.addEventListener("change", (e) => {
-    moveTaskByStatus(e.target.parentElement, e.target.checked);
-  });
+  checkBox.addEventListener("change", (e) => changeTaskStatus(e));
 
   const nameInput = document.createElement("input");
   nameInput.value = name;
@@ -45,3 +37,10 @@ function renderTask({ isCompleted, name }) {
 
   return li;
 }
+
+function newTask({ name }) {
+  const task = StorageManager.createTask({ name });
+  toDoTasks.prepend(renderTask(task));
+}
+
+btnAddTask.addEventListener("click", (e) => newTask({ name: "new Task" }));
