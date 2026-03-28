@@ -38,6 +38,18 @@ function renderTask({ id, isCompleted, name }) {
   return li;
 }
 
+function loadTasks() {
+  for (let task of StorageManager.filterByStatus(false)) {
+    toDoTasks.prepend(renderTask(task));
+  }
+
+  for (let task of StorageManager.filterByStatus(true)) {
+    completedTasks.prepend(renderTask(task));
+  }
+}
+
+loadTasks();
+
 function newTask({ name }) {
   const task = StorageManager.createTask({ name });
   toDoTasks.prepend(renderTask(task));
