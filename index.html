@@ -8,15 +8,32 @@
   </head>
   <body>
     <header></header>
-
     <main>
       <div class="to-do-box">
         <h1 id="to-do-title" contenteditable="true"></h1>
 
-        <button id="add-task">
-          <span class="icon">+</span>
-          <span class="name">Adicionar Tarefa</span>
-        </button>
+        <div class="actions-bar">
+          <div class="tab-status">
+            <button>
+              <span></span>
+              <input type="checkbox" />
+            </button>
+
+            <button></button>
+          </div>
+
+          <nav>
+            <ul class="tab-status">
+              <li><input type="checkbox" /><button>Pendentes</button></li>
+              <li><input type="checkbox" /><button>Concluídas</button></li>
+            </ul>
+          </nav>
+
+          <button id="add-task">
+            <span class="icon">+</span>
+            <span class="name">Adicionar Tarefa</span>
+          </button>
+        </div>
 
         <section class="tasks-section">
           <header>
