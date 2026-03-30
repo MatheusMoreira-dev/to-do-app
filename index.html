@@ -8,49 +8,35 @@
   </head>
   <body>
     <header></header>
+
     <main>
       <div class="to-do-box">
         <h1 id="to-do-title" contenteditable="true"></h1>
 
-        <div class="actions-bar">
-          <div class="tab-status">
-            <button>
-              <span></span>
-              <input type="checkbox" />
-            </button>
+        <div class="tab-status">
+          <button id="tab-to-do">
+            Pendentes
+            <span id="total-to-do"></span>
+          </button>
 
-            <button></button>
-          </div>
-
-          <nav>
-            <ul class="tab-status">
-              <li><input type="checkbox" /><button>Pendentes</button></li>
-              <li><input type="checkbox" /><button>Concluídas</button></li>
-            </ul>
-          </nav>
-
-          <button id="add-task">
-            <span class="icon">+</span>
-            <span class="name">Adicionar Tarefa</span>
+          <button id="tab-completed">
+            Concluídas
+            <span id="total-completed"></span>
           </button>
         </div>
 
         <section class="tasks-section">
           <header>
-            <h2>Pendentes</h2>
-            <span></span>
+            <h2 id="tasks-section-title"></h2>
+            <span id="total-tasks"></span>
           </header>
 
-          <ul id="to-do-tasks" class="list-tasks"></ul>
-        </section>
+          <button id="add-task">
+            <span class="icon">+</span>
+            <span class="name">Adicionar Tarefa</span>
+          </button>
 
-        <section class="tasks-section">
-          <header>
-            <h2>Concluídas</h2>
-            <span></span>
-          </header>
-
-          <ul id="completed-tasks" class="list-tasks"></ul>
+          <ul id="list-tasks" class="list-tasks"></ul>
         </section>
       </div>
     </main>
