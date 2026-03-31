@@ -3,7 +3,6 @@ import { StorageManager } from "./storage.js";
 const title = document.getElementById("to-do-title");
 const listTasks = document.getElementById("list-tasks");
 const titleSectionTasks = document.getElementById("tasks-section-title");
-const totalTasks = document.getElementById("total-tasks");
 
 // Listener de editar título no storage
 title.textContent = StorageManager.getTitle();
@@ -11,9 +10,25 @@ title.addEventListener("blur", (e) =>
   StorageManager.setTitle(e.target.textContent),
 );
 
+let toDoTasks;
+let completedTasks;
+
+// Busca os itens no storage
+function fetchTasks() {
+  toDoTasks = StorageManager.filterByStatus(false);
+  completedTasks = StorageManager.filterByStatus(true);
+}
+
+fetchTasks();
+
+const spanTotalToDoTasks = document.getElementById("total-to-do");
+const spanTotalCompletedTasks = document.getElementById("total-completed");
+
 // Atualiza o total de tasks
-const updateTotalTasks = () =>
-  (totalTasks.textContent = `(${listTasks.childElementCount})`);
+function updateTotalTasks() {
+  spanTotalToDoTasks.textContent = `(${toDoTasks.length})`;
+  spanTotalCompletedTasks.textContent = `(${completedTasks.length})`;
+}
 
 // Função para mudar o Status de uma Task
 function changeTaskStatus(e) {
@@ -23,6 +38,7 @@ function changeTaskStatus(e) {
 
   StorageManager.changeTaskStatus(id, status);
   node.remove();
+  fetchTasks();
   updateTotalTasks();
 }
 
@@ -30,7 +46,7 @@ function changeTaskStatus(e) {
 function renderTask({ id, isCompleted, name }) {
   // Container
   const li = document.createElement("li");
-  li.classList.add("list-tasks");
+  li.classList.add("task");
 
   // Checkbox
   const checkBox = document.createElement("input");
@@ -42,6 +58,7 @@ function renderTask({ id, isCompleted, name }) {
 
   // Nome
   const nameInput = document.createElement("input");
+  nameInput.classList.add("name-task");
   nameInput.value = name;
 
   nameInput.addEventListener("blur", (e) =>
@@ -54,6 +71,7 @@ function renderTask({ id, isCompleted, name }) {
   deleteButton.addEventListener("click", () => {
     StorageManager.deleteTask(id);
     li.remove();
+    fetchTasks();
     updateTotalTasks();
   });
 
@@ -64,11 +82,10 @@ function renderTask({ id, isCompleted, name }) {
 }
 
 // Função para carregar as Tasks Salvas
-function loadTasks(isCompleted) {
+function renderTasksByStatus(isCompleted) {
   listTasks.innerHTML = "";
-  titleSectionTasks.textContent = isCompleted ? "Concluídas" : "Pendentes";
 
-  const tasks = StorageManager.filterByStatus(isCompleted);
+  const tasks = isCompleted ? completedTasks : toDoTasks;
 
   for (let task of tasks) {
     listTasks.prepend(renderTask(task));
@@ -81,6 +98,8 @@ function loadTasks(isCompleted) {
 function newTask({ name }) {
   const task = StorageManager.createTask({ name });
   listTasks.prepend(renderTask(task));
+
+  fetchTasks();
   updateTotalTasks();
 }
 
@@ -92,14 +111,14 @@ btnAddTask.addEventListener("click", (e) => newTask({ name: "new Task" }));
 const tabToDo = document.getElementById("tab-to-do");
 tabToDo.addEventListener("click", () => {
   btnAddTask.style.display = "block";
-  loadTasks(false);
+  renderTasksByStatus(false);
 });
 
 // Listener de filtrar as tarefas concluídas
 const tabCompleted = document.getElementById("tab-completed");
 tabCompleted.addEventListener("click", () => {
   btnAddTask.style.display = "none";
-  loadTasks(true);
+  renderTasksByStatus(true);
 });
 
-loadTasks(false);
+renderTasksByStatus(false);
