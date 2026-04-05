@@ -57,23 +57,31 @@ function renderTask({ id, isCompleted, name }) {
   checkBox.addEventListener("change", (e) => changeTaskStatus(e));
 
   // Nome
-  const nameInput = document.createElement("textarea");
+  const nameInput = document.createElement("div");
+  nameInput.contentEditable = true;
   nameInput.classList.add("name-task");
-  nameInput.value = name;
+  nameInput.textContent = name;
 
-  nameInput.addEventListener("blur", (e) =>
-    StorageManager.editTask(id, { name: e.target.value }),
-  );
+  nameInput.addEventListener("blur", (e) => {
+    StorageManager.editTask(id, { name: e.target.value });
+    nameInput.scrollTop = 0;
+  });
 
   // Deletar
   const deleteButton = document.createElement("button");
-  deleteButton.textContent = "Delete";
+  deleteButton.classList.add("delete-button");
   deleteButton.addEventListener("click", () => {
     StorageManager.deleteTask(id);
     li.remove();
     fetchTasks();
     updateTotalTasks();
   });
+
+  const deleteIcon = document.createElement("span");
+  deleteIcon.classList.add("material-symbols-outlined", "trash-icon");
+  deleteIcon.textContent = "delete";
+
+  deleteButton.appendChild(deleteIcon);
 
   // Adiciona ao container
   li.append(checkBox, nameInput, deleteButton);
@@ -105,7 +113,7 @@ function newTask({ name }) {
 
 // Listener de adicionar uma nova Task
 const btnAddTask = document.getElementById("add-task");
-btnAddTask.addEventListener("click", (e) => newTask({ name: "new Task" }));
+btnAddTask.addEventListener("click", (e) => newTask({ name: "Novo Item" }));
 
 // Listener de filtrar as tarefas pendentes
 const tabToDo = document.getElementById("tab-to-do");

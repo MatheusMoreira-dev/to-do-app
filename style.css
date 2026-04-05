@@ -73,6 +73,22 @@ main {
   gap: 1rem;
 }
 
+#add-task {
+  font-size: smaller;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+#add-task:hover {
+  cursor: pointer;
+  border-bottom: 2px solid blue;
+}
+
+#add-task .icon {
+  font-weight: 500;
+}
+
 #list-tasks {
   display: flex;
   flex-direction: column;
@@ -95,7 +111,36 @@ main {
 
 .name-task {
   width: 100%;
-  resize: none;
-  word-break: break-all;
+  max-height: 100px;
+  line-height: 1.5em;
+  min-height: 1.5em;
+  padding: 5px 20px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  border-bottom: 1px dotted gray;
+}
+
+.name-task:focus {
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+
+  overflow-y: auto;
+  word-break: break-word;
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
   padding: 5px;
+  background: none;
+  border: none;
+}
+
+.delete-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
