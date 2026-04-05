@@ -2,7 +2,6 @@ import { StorageManager } from "./storage.js";
 
 const title = document.getElementById("to-do-title");
 const listTasks = document.getElementById("list-tasks");
-const titleSectionTasks = document.getElementById("tasks-section-title");
 
 // Listener de editar título no storage
 title.textContent = StorageManager.getTitle();
