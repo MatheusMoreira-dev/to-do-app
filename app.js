@@ -49,6 +49,7 @@ function renderTask({ id, isCompleted, name }) {
 
   // Checkbox
   const checkBox = document.createElement("input");
+  checkBox.classList.add("checkbox");
   checkBox.id = id;
   checkBox.type = "checkbox";
   checkBox.checked = isCompleted;
@@ -56,7 +57,7 @@ function renderTask({ id, isCompleted, name }) {
   checkBox.addEventListener("change", (e) => changeTaskStatus(e));
 
   // Nome
-  const nameInput = document.createElement("input");
+  const nameInput = document.createElement("textarea");
   nameInput.classList.add("name-task");
   nameInput.value = name;
 

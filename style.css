@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -29,17 +31,39 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+  font-family: "Google Sans", sans-serif;
 }
 
 #to-do-title {
   word-break: break-all;
+  text-align: center;
+  width: 100%;
+  padding: 5px 20px;
+  font-weight: 500;
+  font-size: x-large;
 }
 
 .tab-status {
   display: flex;
   gap: 1rem;
   width: 100%;
+  font-size: small;
+}
+
+.tab-status input[type="radio"] {
+  display: none;
+}
+
+.tab-status input[type="radio"]:checked + label {
+  font-weight: 500;
+  border-bottom: 3px solid blue;
+  color: black;
+}
+
+.tab-status label {
+  cursor: pointer;
+  color: gray;
 }
 
 .tasks-section {
@@ -49,12 +73,29 @@ main {
   gap: 1rem;
 }
 
+#list-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .task {
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
+.checkbox {
+  scale: 1.5;
+}
+
+.checkbox:hover {
+  cursor: pointer;
+}
+
 .name-task {
-  flex-grow: 1;
+  width: 100%;
+  resize: none;
   word-break: break-all;
+  padding: 5px;
 }

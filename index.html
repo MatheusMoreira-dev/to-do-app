@@ -14,15 +14,19 @@
         <h1 id="to-do-title" contenteditable="true"></h1>
 
         <div class="tab-status">
-          <button id="tab-to-do">
-            Pendentes
-            <span id="total-to-do"></span>
-          </button>
+          <input type="radio" name="tab-active" id="tab-to-do" />
 
-          <button id="tab-completed">
-            Concluídas
+          <label for="tab-to-do">
+            <span>Pendentes</span>
+            <span id="total-to-do"></span>
+          </label>
+
+          <input type="radio" name="tab-active" id="tab-completed" />
+
+          <label for="tab-completed">
+            <span>Concluídas</span>
             <span id="total-completed"></span>
-          </button>
+          </label>
         </div>
 
         <section class="tasks-section">
