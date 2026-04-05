@@ -105,6 +105,16 @@ main {
   flex: 1;
   align-items: center;
   gap: 10px;
+  transition:
+    opacity 0.5s ease,
+    background 0.5s ease,
+    scale 0.5s ease;
+}
+
+.task.delete {
+  opacity: 0;
+  background-color: red;
+  scale: 0.5;
 }
 
 #list-tasks li::before {

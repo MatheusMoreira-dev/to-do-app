@@ -71,10 +71,15 @@ function renderTask({ id, isCompleted, name }) {
   const deleteButton = document.createElement("button");
   deleteButton.classList.add("delete-button");
   deleteButton.addEventListener("click", () => {
-    StorageManager.deleteTask(id);
-    li.remove();
-    fetchTasks();
-    updateTotalTasks();
+    li.classList.add("delete");
+
+    setTimeout(() => {
+      StorageManager.deleteTask(id);
+      li.remove();
+      fetchTasks();
+      updateTotalTasks();
+      li.classList.remove("delete");
+    }, 500);
   });
 
   const deleteIcon = document.createElement("span");
