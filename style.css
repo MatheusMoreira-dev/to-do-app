@@ -5,7 +5,6 @@
   padding: 0;
   font: inherit;
   box-sizing: border-box;
-  list-style: none;
 }
 
 html,
@@ -93,12 +92,32 @@ main {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  overflow-y: auto;
+  max-height: 500px;
+  padding: 10px;
+  list-style: none;
+  counter-reset: tarefa;
 }
 
 .task {
+  counter-increment: tarefa;
   display: flex;
+  flex: 1;
   align-items: center;
   gap: 10px;
+}
+
+#list-tasks li::before {
+  content: counter(tarefa) ".";
+
+  display: inline-block;
+  width: 35px;
+  margin-right: 10px;
+  text-align: left;
+
+  font-size: clamp(12px, 2vw, 16px);
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .checkbox {

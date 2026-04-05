@@ -43,7 +43,7 @@ function changeTaskStatus(e) {
 
 // Renderização de uma Task
 function renderTask({ id, isCompleted, name }) {
-  // Container
+  // Item
   const li = document.createElement("li");
   li.classList.add("task");
 
@@ -63,7 +63,7 @@ function renderTask({ id, isCompleted, name }) {
   nameInput.textContent = name;
 
   nameInput.addEventListener("blur", (e) => {
-    StorageManager.editTask(id, { name: e.target.value });
+    StorageManager.editTask(id, { name: e.target.textContent });
     nameInput.scrollTop = 0;
   });
 
